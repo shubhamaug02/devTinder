@@ -27,7 +27,14 @@ app.use('/test',(req,res) => {
 
 // Request Handlers with http method
 
+// Reading url parameters
+app.get("/user/:userId/:name/:password", (req, res) => {
+  console.log(req.params);
+  res.send({"firstname": "Shubham", "lastname": "Patel"});
+});
+
 app.get("/user", (req, res) => {
+  console.log(req.query);
   res.send({"firstname": "Shubham", "lastname": "Patel"});
 });
 
