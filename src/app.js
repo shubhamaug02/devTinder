@@ -92,6 +92,8 @@ app.use("/multiple", (req, res, next) => {
 });
 */
 
+
+/** 
 app.use("/admin", adminAuth);
 
 app.use("/user/login", (req,res) => {
@@ -112,7 +114,29 @@ app.delete("/admin/deleteAdminData", (req,res) => {
     res.send("Admin Data Deleted");
 });
 
+*/
 
+// Error Handling
+
+// We should try/catch for error handling and also put the app.use("/", () => {}) at the end for the errors to catch
+// As there could be code which does not have try/catch
+
+app.get("/getUserData", (req,res) => {
+    try {
+        throw new Error("djgddghd");
+        res.send("Data Sent");
+    }
+    catch(e){
+         res.status(500).send("some error getting data");
+    }
+    
+});
+
+app.use("/", (err,req,res,next) => {
+    if(err) {
+        res.status(500).send("Something went wrong");
+    }
+});
 
 app.listen(7777, () => {
     console.log("Server started listening at 7777");
