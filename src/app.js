@@ -1,5 +1,8 @@
 const express = require('express');
 
+const {adminAuth,userAuth} = require('./middlewares/auth');
+
+
 const app = express();
 
 // Request Handlers with app.use
@@ -28,6 +31,8 @@ app.use('/test',(req,res) => {
 // Request Handlers with http method
 
 // Reading url parameters
+
+/** 
 app.get("/user/:userId/:name/:password", (req, res) => {
   console.log(req.params);
   res.send({"firstname": "Shubham", "lastname": "Patel"});
@@ -55,8 +60,12 @@ app.patch("/user", (req,res) => {
     res.send("PATCH Request response");
 });
 
+*/
+
+
 // Mutiple Request Handlers
 
+/**
 app.use("/multiple", (req, res, next) => {
     console.log("Route Handler 1");
     // res.send("Response");
@@ -81,6 +90,29 @@ app.use("/multiple", (req, res, next) => {
     res.send("Response 5");
     next();
 });
+*/
+
+app.use("/admin", adminAuth);
+
+app.use("/user/login", (req,res) => {
+    res.send("user Login");
+})
+
+app.get("/user/data", userAuth, (req,res)=> {
+    res.send("User Data Sent !!");
+});
+
+app.get("/admin/getAllData", (req,res) => {
+    console.log("admin data getting send");
+    res.send("Admin Data Sent !!");
+});
+
+app.delete("/admin/deleteAdminData", (req,res) => {
+    console.log("Deleting admin Data");
+    res.send("Admin Data Deleted");
+});
+
+
 
 app.listen(7777, () => {
     console.log("Server started listening at 7777");
