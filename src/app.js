@@ -38,7 +38,6 @@ app.get("/user", (req, res) => {
   res.send({"firstname": "Shubham", "lastname": "Patel"});
 });
 
-
 app.post("/user", (req,res)=> {
     res.send("Data saved successfuly for the POST request!!");
 });
@@ -54,6 +53,33 @@ app.put("/user", (req,res) => {
 
 app.patch("/user", (req,res) => {
     res.send("PATCH Request response");
+});
+
+// Mutiple Request Handlers
+
+app.use("/multiple", (req, res, next) => {
+    console.log("Route Handler 1");
+    // res.send("Response");
+    next();
+}, (req,res,next) => {
+    console.log("Route Handler 2");
+    // res.send("Response 2");
+    next();
+},
+(req,res,next) => {
+    console.log("Route Handler 3");
+    // res.send("Response 3");
+    next();
+},
+(req,res,next) => {
+    console.log("Route Handler 4");
+    // res.send("Response 4");
+    next();
+},
+(req,res,next) => {
+    console.log("Route Handler 5");
+    res.send("Response 5");
+    next();
 });
 
 app.listen(7777, () => {
