@@ -1,9 +1,10 @@
 const express = require('express');
 
-const {adminAuth,userAuth} = require('./middlewares/auth');
-
-
+// const {adminAuth,userAuth} = require('./middlewares/auth');
+const connectDB = require('./config/database');
 const app = express();
+
+const User = require('./models/user');
 
 // Request Handlers with app.use
 
@@ -121,6 +122,7 @@ app.delete("/admin/deleteAdminData", (req,res) => {
 // We should try/catch for error handling and also put the app.use("/", () => {}) at the end for the errors to catch
 // As there could be code which does not have try/catch
 
+/** 
 app.get("/getUserData", (req,res) => {
     try {
         throw new Error("djgddghd");
@@ -138,6 +140,36 @@ app.use("/", (err,req,res,next) => {
     }
 });
 
-app.listen(7777, () => {
-    console.log("Server started listening at 7777");
+*/
+
+
+// POST request signup
+
+app.post("/signup", async (req,res) => {
+    const userData = {
+        firstName: "Virat",
+        lastName: "Kohli",
+        emailId: "virat@kohli.com",
+        password: "virat@123"
+    };
+
+    try {
+        const user = new User(userData); 
+        await user.save();
+        res.send("User Added Successfully !!");
+    }
+    catch(err) {
+        res.status(400).send("Document could not be created : " + err.message);
+    }
+   
+});
+
+// Connecting to the DB
+connectDB().then(() => {
+    console.log("Connected successfully with the MongoDB cluster database");
+    app.listen(7777, () => {
+        console.log("Server started listening at 7777");
+    });
+}).catch(() => {
+    console.log("Error connecting to the DB cluster ");
 });

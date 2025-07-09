@@ -8,3 +8,11 @@
 - Write a dummy auth middleware for admin
 - Write a dummy auth middleware for all user routes, except /user/login
 - Error Handling using app.use("/", (err,req,res,next) => {})
+
+- Install moongoose library
+- Connect to your application to the Database "Connection-url/devTiner"
+- Call the connectDB function and connect to database before starting application on 7777
+- Create a userSchema and user Model
+- Create POST /signup API to add data to database
+- Push some documents using API calls from the POSTMAN
+- Error handling using try/catch
