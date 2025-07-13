@@ -145,13 +145,11 @@ app.use("/", (err,req,res,next) => {
 
 // POST request signup
 
+// middleware to read JSON
+app.use(express.json());
+
 app.post("/signup", async (req,res) => {
-    const userData = {
-        firstName: "Virat",
-        lastName: "Kohli",
-        emailId: "virat@kohli.com",
-        password: "virat@123"
-    };
+    const userData = req.body;
 
     try {
         const user = new User(userData); 
@@ -163,6 +161,60 @@ app.post("/signup", async (req,res) => {
     }
    
 });
+
+app.get("/user", async (req,res) => {
+    try {
+        const user = await User.find({emailId: req.body.emailId});
+        // const user = await User.findById('68734f661f10ff34c5d1229f');
+        if(user.length ===0){
+            res.status(404).send("No user Found with emailId");
+        } else {
+            res.send(user);
+        }
+    }
+    catch(err) {
+        res.status(400).send("Something went wrong");
+    }
+});
+
+app.delete("/user", async (req,res) => {
+    try {
+        const user = await User.findByIdAndDelete(req.body.userId);
+        res.send("User deleted successfully !!");
+    }
+    catch(err) {
+         res.status(400).send("Something went wrong");
+    }
+});
+
+app.patch("/user", async (req,res) => {
+    try {
+    //    const user = await User.findByIdAndUpdate(req.body.userId, req.body, {returnDocument: 'after'} );
+    // Update by the emailId
+       const user = await User.findOneAndUpdate({emailId: req.body.emailId}, req.body, {returnDocument: 'after'} );
+       console.log(user);
+       res.send("User updated successfully !!");
+    }
+    catch (err){
+        res.status(400).send("Something went wrong");
+    }
+})
+
+app.get("/feed", async (req,res) => {
+    try {
+      const users = await User.find({});
+      if(users.length===0){
+        res.status(404).send("No users found in the collection");
+      }
+      else {
+        res.send(users);
+      }
+    }   
+    catch(err){
+        res.status(400).send("Something went wrong !!");
+    }
+});
+
 
 // Connecting to the DB
 connectDB().then(() => {
