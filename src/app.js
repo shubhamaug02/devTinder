@@ -190,7 +190,7 @@ app.patch("/user/:userId", async (req,res) => {
 
     try {
         const ALLOWED_UPDATES = [
-            "userId", "photoUrl", "age", "gender", "about", "skills"
+            "userId", "imageUrl", "age", "gender", "about", "skills"
         ];
 
         const data = req.body;
