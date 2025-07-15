@@ -150,7 +150,6 @@ app.use(express.json());
 
 app.post("/signup", async (req,res) => {
     const userData = req.body;
-
     try {
         const user = new User(userData); 
         await user.save();
@@ -187,16 +186,32 @@ app.delete("/user", async (req,res) => {
     }
 });
 
-app.patch("/user", async (req,res) => {
+app.patch("/user/:userId", async (req,res) => {
+
     try {
-    //    const user = await User.findByIdAndUpdate(req.body.userId, req.body, {returnDocument: 'after'} );
+        const ALLOWED_UPDATES = [
+            "userId", "photoUrl", "age", "gender", "about", "skills"
+        ];
+
+        const data = req.body;
+        const isUpdateAllowed = Object.keys(data).every(k => ALLOWED_UPDATES.includes(k));
+        if(!isUpdateAllowed){
+            throw new Error("Update not Allowed !!");
+        }
+
+        const skills = data?.skills;
+        if(skills.length >10){
+            throw new Error("No more than 10 skills allowed");
+        }
+
+       const user = await User.findByIdAndUpdate(req.params?.userId, req.body, {returnDocument: 'after', runValidators: true} );
     // Update by the emailId
-       const user = await User.findOneAndUpdate({emailId: req.body.emailId}, req.body, {returnDocument: 'after'} );
+    //    const user = await User.findOneAndUpdate({emailId: req.body.emailId}, req.body, {returnDocument: 'after'} );
        console.log(user);
        res.send("User updated successfully !!");
     }
     catch (err){
-        res.status(400).send("Something went wrong");
+        res.status(400).send("Update Failed " + err.message);
     }
 })
 
