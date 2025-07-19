@@ -19,6 +19,32 @@ function validateData(req) {
     }
 }
 
+function validateEditData(req) {
+    const ALLOWED_EDITS_FIELD = ['firstName', 'lastName', 'skills', 'age', 'gender', 'about', 'imageUrl'];
+
+    const isEditAllowed = Object.keys(req.body).every(key => ALLOWED_EDITS_FIELD.includes(key));
+
+    return isEditAllowed;
+}
+
+function validateKeysForPasswordUpdate(req) {
+
+    const NEEDED_FIELDS = ['oldPassword', 'password'];
+    const requestKeys = Object.keys(req.body);
+    
+    const allNeededFieldsPresent = requestKeys.length === NEEDED_FIELDS.length && requestKeys.every(key => NEEDED_FIELDS.includes(key));
+
+    return allNeededFieldsPresent;
+}
+
+function validatePasswordIsStrong(password) {
+    return validator.isStrongPassword(password);
+}
+
+
 module.exports = {
-    validateData
+    validateData,
+    validateEditData,
+    validateKeysForPasswordUpdate,
+    validatePasswordIsStrong
 }
