@@ -47,4 +47,39 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth ,async (req,res) 
     }
 });
 
+//api to accept or reject the request by the loggedin user
+requestRouter.post("/request/review/:status/:requestId", userAuth, async (req,res) => {
+
+    try {
+        const {status, requestId} = req.params;
+        // 1. Validate status
+        const allowed_status = ['accepted', 'rejected'];
+        if(!allowed_status.includes(status)){
+            return res.status(400).json({message: "Invalid Status !!"});
+        }
+
+        // 2. validate the requestId 
+        // 3. the interested status can only be accepted
+        // 4. The loggedinUser must be toUserId in the connectionrequest.
+        
+        const loggedInUser = req.user; 
+        const connectionRequest = await ConnectionRequest.findOne({
+            _id: requestId,
+            toUserId: loggedInUser._id,
+            status: 'interested'
+        });
+        
+        if(!connectionRequest){
+            return res.status(404).json({message: "Connection Request not found !!"});
+        }
+
+        connectionRequest.status = status;
+        const responseData = await connectionRequest.save();
+        res.json({message: `${loggedInUser.firstName} ${status} the connection request`, data: responseData});
+    }
+    catch(err){
+       res.status(400).send("ERROR: "+ err.message);
+    }
+});
+
 module.exports = requestRouter;

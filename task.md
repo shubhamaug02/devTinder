@@ -84,3 +84,9 @@
 - What is the advantages and disadvantages of creating?
 - Read article about compound indexes
 - ALWAYS THINK ABOUT CORNER CASES
+
+- Write code with proper validation for POST /request/review/:status/:requestId
+- Thought process - POST vs GET
+- Read about ref and populate.
+- create GET /users/requests/received with all the checks.
+- Create GET /user/connections API
