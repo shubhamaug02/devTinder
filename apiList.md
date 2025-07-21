@@ -13,6 +13,7 @@
 ## connectionRequestRouter
 - POST /request/send/interested/:userId
 - POST /request/send/ignored/:userId
+ the above 2 clubbed in POST /request/send/:status/:userId
 - POST /request/review/accepted/:requestId
 - POST /request/review/rejected/:requestId
 
