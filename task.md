@@ -90,3 +90,7 @@
 - Read about ref and populate.
 - create GET /users/requests/received with all the checks.
 - Create GET /user/connections API
+
+- Logic for GET /feed API
+- Explore the $nin, $and, $ne and other query operators.
+- Add pagination using skip and limit
