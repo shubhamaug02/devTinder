@@ -1,8 +1,8 @@
 const express = require('express');
 const connectDB = require('./config/database');
 const app = express();
-
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const authRouter = require('./routes/auth');
 const profileRouter = require('./routes/profile');
@@ -149,6 +149,7 @@ app.use("/", (err,req,res,next) => {
 // POST request signup
 
 // middleware to read JSON
+app.use(cors({origin: 'http://localhost:5173', credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 
