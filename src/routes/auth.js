@@ -47,7 +47,7 @@ authRouter.post("/login", async (req,res) => {
             throw new Error("Invalid Credentials !!");
         }
 
-        const isHashMatched = user.validatePassword(user.password);
+        const isHashMatched = await user.validatePassword(password);
         if(isHashMatched) {
             const token = user.getJWTToken();
             res.cookie('token', token, {expires: new Date(Date.now() + 8 * 3600000)});
