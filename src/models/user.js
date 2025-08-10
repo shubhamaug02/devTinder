@@ -67,7 +67,7 @@ const userSchema = new mongoose.Schema({
 userSchema.methods.getJWTToken = function () {
     // don't use arrow function, they does not have their own this 
     const user = this;
-    const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
     if (!token) {
         throw new Error("Invalid Token");
     }
