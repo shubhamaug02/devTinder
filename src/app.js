@@ -145,11 +145,10 @@ app.use("/", (err,req,res,next) => {
 
 */
 
-
-// POST request signup
+require('dotenv').config()
 
 // middleware to read JSON
-app.use(cors({origin: 'http://localhost:5173', credentials: true}));
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -232,7 +231,7 @@ app.use("/", userRouter);
 // Connecting to the DB
 connectDB().then(() => {
     console.log("Connected successfully with the MongoDB cluster database");
-    app.listen(7777, () => {
+    app.listen(process.env.PORT, () => {
         console.log("Server started listening at 7777");
     });
 }).catch(() => {
