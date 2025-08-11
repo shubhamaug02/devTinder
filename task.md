@@ -94,3 +94,20 @@
 - Logic for GET /feed API
 - Explore the $nin, $and, $ne and other query operators.
 - Add pagination using skip and limit
+
+
+# Sending Emails via Amazon SES
+
+- Create a IAM user
+- Give Access to AmazonSESFullAccess
+- Amazon SES: Create an Identity
+- Verify your domain
+- Verify an email address identity
+- Install AWS SDK -v3
+- Code Example https://github.com/awsdocs/aws-doc-sdk-examples/blob/main/javascriptv3/example_code/ses/src/libs/sesClient.js
+- Setup SesClient
+- Access Credentials should be created in IAM under SecurityCredentails Tab
+- Add the credentials to the env file
+- Write code for SESClient
+- Write code for Sending email address
+- Make the emaul dynamic by passing more params to the run function
