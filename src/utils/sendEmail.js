@@ -28,12 +28,12 @@ const createSendEmailCommand = (toAddress, fromAddress, subject, body) => {
     });
 };
 
-const run = async () => {
+const run = async (subject, body, toEmailId) => {
     const sendEmailCommand = createSendEmailCommand(
         "02augshubhampatel@gmail.com",
         "shubhampatel@tinderdev.com",
-        "Email for a received request",
-        "The body of the email !!!"
+        subject,
+        body
     );
 
     try {
