@@ -52,22 +52,24 @@ paymentRouter.post("/payment/webhook", async (req, res) => {
             process.env.RAZORPAY_WEBHOOK_SECRET
         );
 
+        console.log("isWebHookValid ", isWebHookValid);
         if (!isWebHookValid) {
             return res.status(400).json({ msg: "Webhook signature is invalid" });
         }
 
         const paymentDetails = req.body.payload.payment.entity;
 
+        console.log();
         // update the payment status in DB
 
         const payment = await Payment.findOne({ orderId: paymentDetails.order_id });
         payment.status = paymentDetails.status;
         payment.paymentId = paymentDetails.id;
 
-        await order.save();
+        await payment.save();
         // make user as premium in DB
 
-        const user = await User.findById(order.userId);
+        const user = await User.findById(payment.userId);
         user.isPremium = true;
         user.membershipType = payment.notes.membershipType;
         await user.save();
