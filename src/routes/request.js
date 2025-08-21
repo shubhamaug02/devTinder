@@ -44,7 +44,7 @@ requestRouter.post("/request/send/:status/:toUserId", userAuth, async (req, res)
         }
         const responseData = await connectionRequest.save();
 
-        const emailRes = await sendEmail.run();
+        const emailRes = await sendEmail.run("New Connection Request", `${req.user.firstName} is interested in ${toUser.firstName}`);
         console.log(emailRes);
 
         res.json({ message: "Connection request sent !!", data: responseData });
