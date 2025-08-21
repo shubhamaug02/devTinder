@@ -111,3 +111,16 @@
 - Write code for SESClient
 - Write code for Sending email address
 - Make the emaul dynamic by passing more params to the run function
+
+# Razorpay Payment Gateway Integration
+
+- Signup on Razorpay & complete KYC
+- Created a UI for premium page
+- Create an API to create an Order in Backend
+- Add key and secret in env file
+- Initialize Razorpay in utils
+- Create order on Razorpay
+- create Schema and Model
+- saved the order in payments collection
+- make the API dynamic
+- Setup Razorpay webhook on your live  API
