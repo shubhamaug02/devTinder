@@ -3,6 +3,7 @@ const connectDB = require('./config/database');
 const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const http = require('http');
 
 require('dotenv').config();
 
@@ -16,6 +17,8 @@ const profileRouter = require('./routes/profile');
 const requestRouter = require('./routes/request');
 const userRouter = require('./routes/user');
 const paymentRouter = require('./routes/payment');
+const initializeSocket = require('./utils/socket');
+const chatRouter = require('./routes/chat');
 
 require('./utils/cronJob');
 
@@ -161,6 +164,10 @@ app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", userRouter);
 app.use("/", paymentRouter);
+app.use("/", chatRouter);
+
+const server = http.createServer(app);
+initializeSocket(server);
 
 // app.get("/user", async (req,res) => {
 //     try {
@@ -235,7 +242,7 @@ app.use("/", paymentRouter);
 // Connecting to the DB
 connectDB().then(() => {
     console.log("Connected successfully with the MongoDB cluster database");
-    app.listen(process.env.PORT, () => {
+    server.listen(process.env.PORT, () => {
         console.log("Server started listening at 7777");
     });
 }).catch(() => {
